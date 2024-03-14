@@ -12,5 +12,6 @@
       "js": ["scripts/content.js"],
       "matches": ["https://www.google.com/*"]
     }
-  ]
+  ],
+  "permissions": ["tabs"]
 }
