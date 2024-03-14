@@ -7,7 +7,8 @@ async function printStuff() {
         text: "report_back",
       });
       document.querySelector("#stuff").innerHTML = "";
-      if (response && Array.isArray(response)) {
+      console.log(response);
+      if (response && response instanceof Array) {
         for (let q of response) {
           let obj = document.createElement("li");
           let text = q.length < 50 ? q : q.slice(0, 50) + "...";

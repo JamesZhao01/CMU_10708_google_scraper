@@ -10,7 +10,14 @@
   "content_scripts": [
     {
       "js": ["scripts/content.js"],
-      "matches": ["https://www.google.com/*"]
+      "matches": [
+        "https://www.google.com/*",
+        "https://www.bing.com/*",
+        "https://images.search.yahoo.com/*",
+        "https://search.naver.com/*",
+        "https://image.baidu.com/*",
+        "https://www.amazon.com/*"
+      ]
     }
   ],
   "permissions": ["tabs"]

@@ -6,22 +6,49 @@ const styleString = `
   .bam {
     opacity: 0.5;
   }
+  #floater {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background-color: gray;
+    border: 1px solid magenta;
+    z-index: 999;
+    padding: 5px 10px;
+    display: block;
+  }
 `;
+
 const style = document.createElement("style");
 style.textContent = styleString;
 document.head.append(style);
-console.log("Injected");
 
-document.img_urls = [];
+const floater = document.createElement("div");
+floater.id = "floater";
+floater.innerText = "0";
+document.body.appendChild(floater);
+
+document.img_urls = new Set();
+document.ctr = 0;
 
 function callback(ev) {
   ev.preventDefault();
   // console.log(ev.target.src);
-  document.img_urls.push(ev.target.src);
-  if (ev.target.classList.contains("boom")) {
-    ev.target.classList.remove("boom");
+  if (!ev.target.classList.contains("bam")) {
+    document.img_urls.add(ev.target.src);
+    if (ev.target.classList.contains("boom")) {
+      ev.target.classList.remove("boom");
+    }
+    ev.target.classList.add("bam");
+    document.ctr += 1;
+    floater.innerText = document.ctr;
+  } else {
+    if (document.img_urls.has(ev.target.src)) {
+      document.img_urls.delete(ev.target.src);
+      ev.target.classList.remove("bam");
+      document.ctr -= 1;
+      floater.innerText = document.ctr;
+    }
   }
-  ev.target.classList.add("bam");
   return false;
 }
 
@@ -43,8 +70,7 @@ document.addEventListener("mouseout", (event) => {
 });
 
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
-  console.log("Message", msg);
   if (msg.text === "report_back") {
-    sendResponse(document.img_urls);
+    sendResponse(Array.from(document.img_urls));
   }
 });
