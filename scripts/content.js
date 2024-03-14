@@ -12,7 +12,7 @@ const styleString = `
     left: 0px;
     background-color: gray;
     border: 1px solid magenta;
-    z-index: 999;
+    z-index: 999999999999;
     padding: 5px 10px;
     display: block;
   }
